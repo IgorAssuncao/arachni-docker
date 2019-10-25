@@ -1,0 +1,34 @@
+version: '3.7'
+services:
+  arachni:
+    build: .
+    # environment:
+    #   - DB_ADAPTER=postgresql
+    #   - DB_HOST=postgres
+    #   - DB_NAME=arachni_db
+    #   - DB_USER=arachni_user
+    #   - DB_PASS=arachni_pass
+    ports:
+      - "222:22"
+      - "7331:7331"
+      - "9292:9292"
+    # depends_on:
+    #   - postgres
+    # networks:
+    #   - "arachni_network"
+
+  postgres:
+    image: postgres:12.0-alpine
+    environment:
+      - POSTGRES_USER=arachni_user
+      - POSTGRES_PASSWORD=arachni_pass
+      - POSTGRES_DB=arachni_db
+    ports:
+      - "5432:5432"
+    networks:
+      - "arachni_network"
+
+networks:
+  arachni_network:
+    driver: bridge
+
